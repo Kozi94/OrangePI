@@ -1,7 +1,12 @@
-# sudo su
+# Скрипт для установки всякого из README на Orange Pi 4 LTS с системой Linux 4.4 (debian c gui)
+# ну это классика
+echo "================= Oh my.. Starting stradaniya ================="
 sudo apt update
 sudo apt upgrade -y
 
+# вырубаем spi и включаем uart4 (сидят на одной линии, нельзя юзать одновременно)
+echo "==============================================================="
+echo "======================== Enable UART4 =========================" 
 cat > /home/orangepi/rockchip-uart4.dts << EOF
 /dts-v1/;
 /plugin/;
@@ -24,19 +29,34 @@ EOF
 
 sudo orangepi-add-overlay /home/orangepi/rockchip-uart4.dts
 rm /home/orangepi/rockchip-uart4.dts
+echo "==============================================================="
 
+# то ли просто проверка камеры, то ли запуск какой, мне пофиг
+echo "==============================================================="
+echo "===================== Setting CSI Camera ======================"
 sudo dmesg | grep Async
+echo "==============================================================="
 
+# скачаем и установим VS Code
+echo "==============================================================="
+echo "======================= Install VS Code ======================="
 cd /home/orangepi/
 wget https://github.com/Kozi94/OrangePI/raw/main/code.deb
 sudo apt install ./code.deb -y
-rm code.deb
+sudo rm code.deb
+echo "==============================================================="
 
+# скачаем и скомпилим библиотеку gpio
+echo "==============================================================="
+echo "====================== Building wiringOP ======================"
 git clone https://github.com/orangepi-xunlong/wiringOP.git
 cd wiringOP
 sudo ./build clean
 sudo ./build
+echo "==============================================================="
 
+# самое долгое, устанавливаем зависимости, скачиваем, компилим и устанавливаем OpenCV
+echo "==============================================================="
 echo "Installing OpenCV 4.8.0 on your Raspberry Pi 64-bit OS"
 echo "It will take minimal 2 hour !"
 cd /home/orangepi
@@ -96,7 +116,7 @@ sudo apt-get update
 echo "Congratulations!"
 echo "You've successfully installed OpenCV 4.8.0 on your Raspberry Pi 64-bit OS"
 
-
+# скачиваем, устанавливаем и добавляем в автозагрузку удаленный доступ к рабочему столу x11vnc
 sudo apt-get install x11vnc -y
 cd /home/orangepi
 mkdir .vnc
@@ -123,6 +143,7 @@ sudo systemctl start x11vnc.service
 sleep  5s
 systemctl status x11vnc.service
 
+echo "==============================================================="
 echo "Ya kon4il =)"
 
 # sudo shutdown -r now
