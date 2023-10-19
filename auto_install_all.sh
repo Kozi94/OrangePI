@@ -48,6 +48,7 @@ EOF
 sudo systemctl daemon-reload
 sleep  5s
 sudo systemctl enable x11vnc.service
+sudo systemctl start x11vnc.service
 sleep  5s
 
 cd /home/orangepi/
