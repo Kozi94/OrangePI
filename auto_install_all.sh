@@ -27,30 +27,6 @@ rm /home/orangepi/rockchip-uart4.dts
 
 sudo dmesg | grep Async
 
-sudo apt-get install x11vnc -y
-cd /home/orangepi
-mkdir .vnc
-x11vnc -storepasswd
-sudo cat > /lib/systemd/system/x11vnc.service << EOF
-[Unit]
-Description=Start x11vnc.
-After=prefdm.service
-
-[Service]
-User=root
-Restart=on-failure
-ExecStart=/usr/bin/x11vnc -auth guess -noxfixes -forever -rfbport 5900 -shared $
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-sudo systemctl daemon-reload
-sleep  5s
-sudo systemctl enable x11vnc.service
-sudo systemctl start x11vnc.service
-sleep  5s
-
 cd /home/orangepi/
 wget https://github.com/Kozi94/OrangePI/raw/main/code.deb
 sudo apt install ./code.deb -y
@@ -116,11 +92,37 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
 make -j5
 sudo make install
 sudo ldconfig
-
-# make clean
 sudo apt-get update
-
 echo "Congratulations!"
 echo "You've successfully installed OpenCV 4.8.0 on your Raspberry Pi 64-bit OS"
+
+
+sudo apt-get install x11vnc -y
+cd /home/orangepi
+mkdir .vnc
+x11vnc -storepasswd
+sudo cat > /home/orangepi/x11vnc.service << EOF
+[Unit]
+Description=Start x11vnc.
+After=prefdm.service
+
+[Service]
+User=root
+Restart=on-failure
+ExecStart=/usr/bin/x11vnc -auth guess -noxfixes -forever -rfbport 5900 -shared $
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo mv /home/orangepi/x11vnc.service /lib/systemd/system/
+sudo systemctl daemon-reload
+sleep  5s
+sudo systemctl enable x11vnc.service
+sudo systemctl start x11vnc.service
+sleep  5s
+systemctl status x11vnc.service
+
+echo "Ya kon4il =)"
 
 # sudo shutdown -r now
