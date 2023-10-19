@@ -28,7 +28,9 @@ rm /home/orangepi/rockchip-uart4.dts
 sudo dmesg | grep Async
 
 sudo apt-get install x11vnc -y
-x11vnc -storepasswd /home/orangepi/.vnc/passwd
+cd ~
+mkdir .vnc
+x11vnc -storepasswd
 sudo cat > /lib/systemd/system/x11vnc.service << EOF
 [Unit]
 Description=Start x11vnc.
