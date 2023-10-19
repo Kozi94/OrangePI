@@ -115,8 +115,11 @@ sudo ldconfig
 sudo apt-get update
 echo "Congratulations!"
 echo "You've successfully installed OpenCV 4.8.0 on your Raspberry Pi 64-bit OS"
+echo "==============================================================="
 
 # скачиваем, устанавливаем и добавляем в автозагрузку удаленный доступ к рабочему столу x11vnc
+echo "==============================================================="
+echo "===================== Install VNC server ======================"
 sudo apt-get install x11vnc -y
 cd /home/orangepi
 mkdir .vnc
