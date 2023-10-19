@@ -28,7 +28,7 @@ rm /home/orangepi/rockchip-uart4.dts
 sudo dmesg | grep Async
 
 sudo apt-get install x11vnc -y
-cd ~
+cd /home/orangepi
 mkdir .vnc
 x11vnc -storepasswd
 sudo cat > /lib/systemd/system/x11vnc.service << EOF
@@ -62,7 +62,7 @@ sudo ./build
 
 echo "Installing OpenCV 4.8.0 on your Raspberry Pi 64-bit OS"
 echo "It will take minimal 2 hour !"
-cd ~
+cd /home/orangepi
 sudo apt-get install -y build-essential cmake unzip pkg-config
 sudo apt-get install -y libjpeg-dev libtiff-dev libpng-dev
 sudo apt-get install -y libavcodec-dev libavformat-dev libswscale-dev
@@ -78,12 +78,12 @@ sudo apt-get install -y liblapack-dev gfortran libhdf5-dev
 sudo apt-get install -y libprotobuf-dev libgoogle-glog-dev libgflags-dev
 sudo apt-get install -y protobuf-compiler
 
-cd ~ 
+cd /home/orangepi
 sudo rm -rf opencv*
 git clone --depth=1 https://github.com/opencv/opencv.git
 git clone --depth=1 https://github.com/opencv/opencv_contrib.git
 
-cd ~/opencv
+cd /home/orangepi/opencv
 mkdir build
 cd build
 
