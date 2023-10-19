@@ -1,6 +1,6 @@
-sudo su
-apt update
-apt upgrade -y
+# sudo su
+sudo apt update
+sudo apt upgrade -y
 
 cat > /home/orangepi/rockchip-uart4.dts << EOF
 /dts-v1/;
@@ -22,14 +22,14 @@ cat > /home/orangepi/rockchip-uart4.dts << EOF
 };
 EOF
 
-orangepi-add-overlay /home/orangepi/rockchip-uart4.dts
+sudo orangepi-add-overlay /home/orangepi/rockchip-uart4.dts
 rm /home/orangepi/rockchip-uart4.dts
 
-dmesg | grep Async
+sudo dmesg | grep Async
 
-apt-get install x11vnc -y
+sudo apt-get install x11vnc -y
 x11vnc -storepasswd /home/orangepi/.vnc/passwd
-cat > /lib/systemd/system/x11vnc.service << EOF
+sudo cat > /lib/systemd/system/x11vnc.service << EOF
 [Unit]
 Description=Start x11vnc.
 After=prefdm.service
@@ -43,38 +43,38 @@ ExecStart=/usr/bin/x11vnc -auth guess -noxfixes -forever -rfbport 5900 -shared $
 WantedBy=multi-user.target
 EOF
 
-systemctl daemon-reload
+sudo systemctl daemon-reload
 sleep  5s
-systemctl enable x11vnc.service
+sudo systemctl enable x11vnc.service
 sleep  5s
 
 cd /home/orangepi/
 wget https://github.com/Kozi94/OrangePI/raw/main/code.deb
-apt install ./code.deb -y
+sudo apt install ./code.deb -y
 rm code.deb
 
 git clone https://github.com/orangepi-xunlong/wiringOP.git
 cd wiringOP
-./build clean
-./build
+sudo ./build clean
+sudo ./build
 
 echo "Installing OpenCV 4.8.0 on your Raspberry Pi 64-bit OS"
 echo "It will take minimal 2 hour !"
 cd ~
-apt-get install -y build-essential cmake unzip pkg-config
-apt-get install -y libjpeg-dev libtiff-dev libpng-dev
-apt-get install -y libavcodec-dev libavformat-dev libswscale-dev
-apt-get install -y libgtk2.0-dev libcanberra-gtk* libgtk-3-dev
-apt-get install -y libgstreamer1.0-dev gstreamer1.0-gtk3
-apt-get install -y libgstreamer-plugins-base1.0-dev gstreamer1.0-gl
-apt-get install -y libxvidcore-dev libx264-dev
-apt-get install -y python3-dev python3-numpy python3-pip
-apt-get install -y libtbb2 libtbb-dev libdc1394-22-dev
-# apt-get install -y libv4l-dev v4l-utils
-apt-get install -y libopenblas-dev libatlas-base-dev libblas-dev
-apt-get install -y liblapack-dev gfortran libhdf5-dev
-apt-get install -y libprotobuf-dev libgoogle-glog-dev libgflags-dev
-apt-get install -y protobuf-compiler
+sudo apt-get install -y build-essential cmake unzip pkg-config
+sudo apt-get install -y libjpeg-dev libtiff-dev libpng-dev
+sudo apt-get install -y libavcodec-dev libavformat-dev libswscale-dev
+sudo apt-get install -y libgtk2.0-dev libcanberra-gtk* libgtk-3-dev
+sudo apt-get install -y libgstreamer1.0-dev gstreamer1.0-gtk3
+sudo apt-get install -y libgstreamer-plugins-base1.0-dev gstreamer1.0-gl
+sudo apt-get install -y libxvidcore-dev libx264-dev
+sudo apt-get install -y python3-dev python3-numpy python3-pip
+sudo apt-get install -y libtbb2 libtbb-dev libdc1394-22-dev
+# sudo apt-get install -y libv4l-dev v4l-utils
+sudo apt-get install -y libopenblas-dev libatlas-base-dev libblas-dev
+sudo apt-get install -y liblapack-dev gfortran libhdf5-dev
+sudo apt-get install -y libprotobuf-dev libgoogle-glog-dev libgflags-dev
+sudo apt-get install -y protobuf-compiler
 
 cd ~ 
 sudo rm -rf opencv*
