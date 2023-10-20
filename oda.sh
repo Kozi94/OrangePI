@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Скрипт для установки всякого из README на Orange Pi 4 LTS с системой Linux 4.4 (debian c gui)
 # ну это классика
 echo "================= Oh my.. Starting stradaniya ================="
@@ -117,6 +119,33 @@ echo "Congratulations!"
 echo "You've successfully installed OpenCV 4.8.0 on your Raspberry Pi 64-bit OS"
 echo "==============================================================="
 
+# изменим разрешение экрана, это ж жесть
+#cvt 1920 1080 60 // разрешение и частота, что бы узнать Modeline
+echo "==============================================================="
+echo "======================= Resize monitor ========================"
+sudo cat > /home/orangepi/resizeDisplay.service << EOF
+[Unit]
+Description=Start resize Display.
+After=graphical.target
+
+[Service]
+User=root
+Restart=on-failure
+ниже не правильно
+ExecStart=xrandr --newmode "1920x1080_60.00" 173.00 1920 2048 2248 2576 1080 1083 1088 1120 -hsync +vsync && xrandr --addmode HDMI-1 1920x1080_60.00 && xrandr --output HDMI-1 --mode 1920x1080_60.00
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo mv /home/orangepi/resizeDisplay.service /lib/systemd/system/
+sudo systemctl daemon-reload
+sleep 5s
+sudo systemctl enable resizeDisplay.service
+sudo systemctl start resizeDisplay.service
+sleep 5s
+echo "==============================================================="
+
 # скачиваем, устанавливаем и добавляем в автозагрузку удаленный доступ к рабочему столу x11vnc
 echo "==============================================================="
 echo "===================== Install VNC server ======================"
@@ -132,7 +161,7 @@ After=prefdm.service
 [Service]
 User=root
 Restart=on-failure
-ExecStart=/usr/bin/x11vnc -auth guess -noxfixes -forever -rfbport 5900 -shared $
+ExecStart=/usr/bin/x11vnc -auth guess -noxfixes -forever -rfbport 5900 -shared
 
 [Install]
 WantedBy=multi-user.target
@@ -144,7 +173,7 @@ sleep  5s
 sudo systemctl enable x11vnc.service
 sudo systemctl start x11vnc.service
 sleep  5s
-systemctl status x11vnc.service
+# systemctl status x11vnc.service
 
 echo "==============================================================="
 echo "Ya kon4il =)"
