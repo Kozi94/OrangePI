@@ -119,32 +119,6 @@ echo "Congratulations!"
 echo "You've successfully installed OpenCV 4.8.0 on your Raspberry Pi 64-bit OS"
 echo "==============================================================="
 
-# изменим разрешение экрана, это ж жесть
-#cvt 1920 1080 60 // разрешение и частота, что бы узнать Modeline
-#echo "==============================================================="
-#echo "======================= Resize monitor ========================"
-#sudo cat > /home/orangepi/resizeDisplay.service << EOF
-#[Unit]
-#Description=Start resize Display.
-#After=graphical.target
-
-#[Service]
-#User=root
-#Restart=on-failure
-#ExecStart=xrandr --newmode "1920x1080_60.00" 173.00 1920 2048 2248 2576 1080 1083 1088 1120 -hsync +vsync && xrandr --addmode HDMI-1 1920x1080_60.00 && xrandr --output HDMI-1 --mode 1920x1080_60.00
-
-#[Install]
-#WantedBy=multi-user.target
-#EOF
-
-#sudo mv /home/orangepi/resizeDisplay.service /lib/systemd/system/
-#sudo systemctl daemon-reload
-#sleep 5s
-#sudo systemctl enable resizeDisplay.service
-#sudo systemctl start resizeDisplay.service
-#sleep 5s
-#echo "==============================================================="
-
 # скачиваем, устанавливаем и добавляем в автозагрузку удаленный доступ к рабочему столу x11vnc
 echo "==============================================================="
 echo "===================== Install VNC server ======================"
@@ -174,7 +148,24 @@ sudo systemctl start x11vnc.service
 sleep  5s
 # systemctl status x11vnc.service
 
+# изменим разрешение экрана, это ж жесть
+cvt 1920 1080 60 // разрешение и частота, что бы узнать Modeline
+echo "==============================================================="
+echo "======================= Resize monitor ========================"
+sudo cat > /home/orangepi/.vnc/ola.sh << EOF
+#!/usr/bin/bash
+
+xrandr --newmode "1920x1080_60.00" 173.00 1920 2048 2248 2576 1080 1083 1088 1120 -hsync +vsync
+xrandr --addmode HDMI-1 1920x1080_60.00 
+xrandr --output HDMI-1 --mode 1920x1080_60.00
+exit 0
+EOF
+
+sudo chmod +x /home/orangepi/.vnc/ola.sh
+echo "==============================================================="
+
 echo "==============================================================="
 echo "Ya kon4il =)"
+echo "Add the "/home/orangepi/.vnc/ola.sh" file to the auto loading"
 
 # sudo shutdown -r now
