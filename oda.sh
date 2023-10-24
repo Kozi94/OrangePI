@@ -5,6 +5,7 @@
 echo "================= Oh my.. Starting stradaniya ================="
 sudo apt update
 sudo apt upgrade -y
+sudo apt install gnome-keyrin -y
 
 # вырубаем spi и включаем uart4 (сидят на одной линии, нельзя юзать одновременно)
 echo "==============================================================="
@@ -167,5 +168,6 @@ echo "==============================================================="
 echo "==============================================================="
 echo "Ya kon4il =)"
 echo "Add the "/home/orangepi/.vnc/ola.sh" file to the auto loading"
+echo "In VSCode click Ctrl+Shift+P, Find \"Preferences: Configure Runtime Argument\" and add \"password-store\": \"gnome\""
 
 # sudo shutdown -r now
