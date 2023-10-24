@@ -169,5 +169,6 @@ echo "==============================================================="
 echo "Ya kon4il =)"
 echo "Add the "/home/orangepi/.vnc/ola.sh" file to the auto loading"
 echo "In VSCode click Ctrl+Shift+P, Find \"Preferences: Configure Runtime Argument\" and add \"password-store\": \"gnome\""
+echo "После нажать Ctrl+P, найти и установить \"ext install DavidWang.ini-for-vscode\""
 
 # sudo shutdown -r now
