@@ -77,7 +77,7 @@ sudo apt-get install -y libopenblas-dev libatlas-base-dev libblas-dev
 sudo apt-get install -y liblapack-dev gfortran libhdf5-dev
 sudo apt-get install -y libprotobuf-dev libgoogle-glog-dev libgflags-dev
 sudo apt-get install -y protobuf-compiler
-sudo apt-get install -y qt5-default
+# sudo apt-get install -y qt5-default # Если нужна привязка с Qt
 
 cd /home/orangepi
 sudo rm -rf opencv*
@@ -104,7 +104,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
 -D WITH_V4L=ON \
 -D WITH_LIBV4L=ON \
 -D WITH_VTK=OFF \
--D WITH_QT=ON \
+-D WITH_QT=OFF \ # ну или ON если надо
 -D WITH_PROTOBUF=ON \
 -D OPENCV_ENABLE_NONFREE=ON \
 -D INSTALL_C_EXAMPLES=OFF \
