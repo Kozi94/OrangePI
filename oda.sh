@@ -136,7 +136,7 @@ After=prefdm.service
 [Service]
 User=root
 Restart=on-failure
-ExecStart=/usr/bin/x11vnc -auth guess -noxfixes -forever -rfbport 5900 -shared
+ExecStart=/usr/bin/x11vnc -auth guess -noxfixes -forever -display :0 -shared
 
 [Install]
 WantedBy=multi-user.target
