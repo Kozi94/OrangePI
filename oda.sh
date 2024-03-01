@@ -164,11 +164,11 @@ exit 0
 EOF
 
 sudo chmod +x /home/orangepi/.vnc/ola.sh
+sudo sh -c "echo 'display-setup-script=/home/orangepi/.vnc/ola.sh' >> /usr/share/lightdm/lightdm.conf.d/01_debian.conf"
 echo "==============================================================="
 
 echo "==============================================================="
 echo "Ya kon4il =)"
-echo "Add the "/home/orangepi/.vnc/ola.sh" file to the auto loading"
 echo "In VSCode click Ctrl+Shift+P, Find \"Preferences: Configure Runtime Argument\" and add \"password-store\": \"gnome\""
 echo "После нажать Ctrl+P, найти и установить \"ext install DavidWang.ini-for-vscode\""
 
