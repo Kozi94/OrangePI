@@ -79,14 +79,19 @@ sudo apt-get install -y libprotobuf-dev libgoogle-glog-dev libgflags-dev
 sudo apt-get install -y protobuf-compiler
 # sudo apt-get install -y qt5-default # Если нужна привязка с Qt
 
-cd /home/orangepi
+cd ~
 sudo rm -rf opencv*
+wget -O opencv.zip https://github.com/opencv/opencv/archive/4.8.0.zip
+wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.8.0.zip
+unzip opencv.zip
+unzip opencv_contrib.zip
+mv opencv-4.8.0 opencv
+mv opencv_contrib-4.8.0 opencv_contrib
+rm opencv.zip
+rm opencv_contrib.zip
+cd /home/orangepi
 git clone --depth=1 https://github.com/opencv/opencv.git
 git clone --depth=1 https://github.com/opencv/opencv_contrib.git
-
-cd /home/orangepi/opencv
-mkdir build
-cd build
 
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
 -D CMAKE_INSTALL_PREFIX=/usr/local \
@@ -104,7 +109,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
 -D WITH_V4L=ON \
 -D WITH_LIBV4L=ON \
 -D WITH_VTK=OFF \
--D WITH_QT=OFF \ # ну или ON если надо
+-D WITH_QT=OFF \
 -D WITH_PROTOBUF=ON \
 -D OPENCV_ENABLE_NONFREE=ON \
 -D INSTALL_C_EXAMPLES=OFF \
@@ -116,6 +121,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
 make -j5
 sudo make install
 sudo ldconfig
+make clean
 sudo apt-get update
 echo "Congratulations!"
 echo "You've successfully installed OpenCV 4.8.0 on your Raspberry Pi 64-bit OS"
