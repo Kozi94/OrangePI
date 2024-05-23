@@ -90,8 +90,12 @@ mv opencv_contrib-4.8.0 opencv_contrib
 rm opencv.zip
 rm opencv_contrib.zip
 cd /home/orangepi
-git clone --depth=1 https://github.com/opencv/opencv.git
-git clone --depth=1 https://github.com/opencv/opencv_contrib.git
+# git clone --depth=1 https://github.com/opencv/opencv.git
+# git clone --depth=1 https://github.com/opencv/opencv_contrib.git
+
+cd opencv
+mkdir nuild
+cd build
 
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
 -D CMAKE_INSTALL_PREFIX=/usr/local \
